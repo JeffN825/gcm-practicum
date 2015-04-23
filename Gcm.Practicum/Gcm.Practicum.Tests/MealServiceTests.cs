@@ -7,10 +7,6 @@ namespace Gcm.Practicum.Tests
     [TestClass]
     public class MealServiceTests
     {
-        [TestMethod]
-        public void Order_ThrowsException_WhenInvalidTimeEntered()
-        {
-             
-        }
+   
     }
 }

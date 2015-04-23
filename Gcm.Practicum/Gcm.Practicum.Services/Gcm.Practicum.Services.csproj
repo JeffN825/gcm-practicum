@@ -43,6 +43,7 @@
       <Link>InternalsVisibleTo.cs</Link>
     </Compile>
     <Compile Include="IMealService.cs" />
+    <Compile Include="Meal.cs" />
     <Compile Include="MealService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
