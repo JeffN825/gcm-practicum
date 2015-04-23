@@ -7,18 +7,18 @@ namespace Gcm.Practicum.Services
     /// </summary>
     public class Meal
     {
-        public Meal(string entree, string side, string drink, string dessert)
+        public Meal(string[] entrees, string[] sides, string[] drinks, string[] desserts)
         {
-            Entree = entree;
-            Side = side;
-            Drink = drink;
-            Dessert = dessert;
+            Entrees = entrees;
+            Sides = sides;
+            Drinks = drinks;
+            Desserts = desserts;
         }
 
-        public string Entree { get; private set; }
-        public string Side { get; private set; }
-        public string Drink { get; private set; }
-        public string Dessert { get; private set; }
+        public string[] Entrees { get; private set; }
+        public string[] Sides { get; private set; }
+        public string[] Drinks { get; private set; }
+        public string[] Desserts { get; private set; }
 
         /// <summary>
         ///     Prints food in the following order: entrée, side, drink, dessert.
@@ -28,7 +28,11 @@ namespace Gcm.Practicum.Services
         /// </returns>
         public override string ToString()
         {
-            return string.Join(", ", new[] {Entree, Side, Drink, Dessert}.Where(i => !string.IsNullOrWhiteSpace(i)).ToArray());
+            return string.Join(", ", new[] {Entrees, Sides, Drinks, Desserts}
+                .Where(i => i != null && i.Length > 0) // only include meal parts that exist
+                .Select(i => i.Length == 1 ? i[0] : (i + string.Format("({0})", i.Length))) // add count of that part in parentheses if multiple
+                .Where(i => !string.IsNullOrWhiteSpace(i))
+                .ToArray());
         }
     }
 }

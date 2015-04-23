@@ -45,6 +45,7 @@
     <Compile Include="IMealService.cs" />
     <Compile Include="Meal.cs" />
     <Compile Include="MealService.cs" />
+    <Compile Include="OrderException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
