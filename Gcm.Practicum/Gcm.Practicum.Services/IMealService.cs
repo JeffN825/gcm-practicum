@@ -20,8 +20,10 @@ namespace Gcm.Practicum.Services
         /// 1 (entrée): eggs in the morning, steak at night
         /// 2 (side): toast in the morning, potato at night (multiple are allowed)
         /// 3 (drink): coffee in the morning (multiple are allowed), wine at night
-        /// 4 (dessert): none in the morning, cake at night
-        /// <returns>A mean based on the time of day and dish types desired.</returns>
-        Meal Order(string timeOfDay, string dishTypes);
+        /// 4 (dessert): none in the morning, cake at night</param>
+        /// <returns>
+        /// A mean based on the time of day and dish types desired.
+        /// </returns>
+        Meal Order(string timeOfDay, string[] dishTypes);
     }
 }
