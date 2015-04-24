@@ -14,6 +14,17 @@ namespace Gcm.Practicum.Console
         /// <exception cref="System.ArgumentOutOfRangeException">args;There should be exactly 2 arguments.</exception>
         internal static void Main(params string[] args)
         {
+            Run(args);
+        }
+
+        /// <summary>
+        /// Performs actual work and returns the output to print to the console.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">args;There should be at least 1 arguments.</exception>
+        internal static string Run(params string[] args)
+        {
             if (args.Length < 1 || string.IsNullOrWhiteSpace(args[0]))
             {
                 throw new ArgumentOutOfRangeException("args", "There should be at least 1 arguments.");
@@ -33,11 +44,11 @@ namespace Gcm.Practicum.Console
                         .Select(i => i.Replace(",", string.Empty))
                         .ToArray());
 
-                System.Console.WriteLine(meal);
+                return meal.ToString();
             }
             catch (OrderException ex)
             {
-                System.Console.WriteLine(ex);
+                return ex.ToString();
             }
             catch (Exception ex)
             {
@@ -45,9 +56,6 @@ namespace Gcm.Practicum.Console
                 Trace.TraceError(ex.ToString());
                 throw;
             }
-
-            System.Console.WriteLine("Press any key to continue...");
-            System.Console.ReadKey();
         }
     }
 }

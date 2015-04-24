@@ -9,10 +9,17 @@ namespace Gcm.Practicum.Tests
     public class MealServiceTests
     {
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Resolve_ThrowsException_WhenUnsupportedServiceIsRequested()
         {
-            new ServiceContainer().Resolve<object>();
+            try
+            {
+                new ServiceContainer().Resolve<object>();
+                Assert.Fail();
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.AreEqual("System.Object service is not supported.", ex.Message);
+            }
         }
 
         [TestMethod]
@@ -45,10 +52,10 @@ namespace Gcm.Practicum.Tests
         {
             IMealService mealService = new MealService();
             var meal = mealService.Order("morning", new[] { "1", "2", "3" });
-            Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "eggs");
-            Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "toast");
-            Assert.IsTrue(meal.Drinks.Length == 1 && meal.Drinks[0] == "coffee");
-            Assert.IsTrue(meal.Desserts.Length == 0);
+            Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "eggs");
+            Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "toast");
+            Assert.IsTrue(meal.Drinks.Count() == 1 && meal.Drinks.First() == "coffee");
+            Assert.IsTrue(meal.Desserts.Count() == 0);
         }
 
 
@@ -60,10 +67,10 @@ namespace Gcm.Practicum.Tests
         {
             IMealService mealService = new MealService();
             var meal = mealService.Order("morning", new[] { "1", "2", "3" });
-            Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "eggs");
-            Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "toast");
-            Assert.IsTrue(meal.Drinks.Length == 1 && meal.Drinks[0] == "coffee");
-            Assert.IsTrue(meal.Desserts.Length == 0);
+            Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "eggs");
+            Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "toast");
+            Assert.IsTrue(meal.Drinks.Count() == 1 && meal.Drinks.First() == "coffee");
+            Assert.IsTrue(meal.Desserts.Count() == 0);
         }
 
         [TestMethod]
@@ -80,10 +87,10 @@ namespace Gcm.Practicum.Tests
             {
                 Assert.IsNotNull(ex.Meal);
                 var meal = ex.Meal;
-                Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "eggs");
-                Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "toast");
-                Assert.IsTrue(meal.Drinks.Length == 1 && meal.Drinks[0] == "coffee");
-                Assert.IsTrue(meal.Desserts.Length == 0);
+                Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "eggs");
+                Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "toast");
+                Assert.IsTrue(meal.Drinks.Count() == 1 && meal.Drinks.First() == "coffee");
+                Assert.IsTrue(meal.Desserts.Count() == 0);
                 Assert.AreEqual(ex.ToString(), "eggs, toast, coffee, error");
             }
         }
@@ -96,21 +103,21 @@ namespace Gcm.Practicum.Tests
         {
             IMealService mealService = new MealService();
             var meal = mealService.Order("morning", new[] { "1", "2", "3", "3", "3" });
-            Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "eggs");
-            Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "toast");
-            Assert.IsTrue(meal.Drinks.Length == 3 && meal.Drinks.All(d => d == "coffee"));
-            Assert.IsTrue(meal.Desserts.Length == 0);
+            Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "eggs");
+            Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "toast");
+            Assert.IsTrue(meal.Drinks.Count() == 3 && meal.Drinks.All(d => d == "coffee"));
+            Assert.IsTrue(meal.Desserts.Count() == 0);
         }
 
         [TestMethod]
         public void Order_ReturnsMeal_WhenNightSteakPotatoWineCakeRequested()
         {
             IMealService mealService = new MealService();
-            var meal = mealService.Order("morning", new[] { "1", "2", "3", "4" });
-            Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "steak");
-            Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "potato");
-            Assert.IsTrue(meal.Drinks.Length == 1 && meal.Drinks[0] == "wine");
-            Assert.IsTrue(meal.Desserts.Length == 1 && meal.Desserts[0] == "cake");
+            var meal = mealService.Order("night", new[] { "1", "2", "3", "4" });
+            Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "steak");
+            Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "potato");
+            Assert.IsTrue(meal.Drinks.Count() == 1 && meal.Drinks.First() == "wine");
+            Assert.IsTrue(meal.Desserts.Count() == 1 && meal.Desserts.First() == "cake");
         }
 
         /// <summary>
@@ -120,11 +127,11 @@ namespace Gcm.Practicum.Tests
         public void Order_ReturnsMeal_WhenNightSteakPotatox2CakeRequested()
         {
             IMealService mealService = new MealService();
-            var meal = mealService.Order("morning", new[] { "1", "2", "3", "4" });
-            Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "steak");
-            Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "potato");
-            Assert.IsTrue(meal.Drinks.Length == 0);
-            Assert.IsTrue(meal.Desserts.Length == 1 && meal.Desserts[0] == "cake");
+            var meal = mealService.Order("night", new[] { "1", "2", "2", "4" });
+            Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "steak");
+            Assert.IsTrue(meal.Sides.Count() == 2 && meal.Sides.First() == "potato");
+            Assert.IsTrue(meal.Drinks.Count() == 0);
+            Assert.IsTrue(meal.Desserts.Count() == 1 && meal.Desserts.First() == "cake");
         }
 
         [TestMethod]
@@ -141,10 +148,10 @@ namespace Gcm.Practicum.Tests
             {
                 Assert.IsNotNull(ex.Meal);
                 var meal = ex.Meal;
-                Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "steak");
-                Assert.IsTrue(meal.Sides.Length == 1 && meal.Sides[0] == "potato");
-                Assert.IsTrue(meal.Drinks.Length == 1 && meal.Drinks[0] == "wine");
-                Assert.IsTrue(meal.Desserts.Length == 0);
+                Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "steak");
+                Assert.IsTrue(meal.Sides.Count() == 1 && meal.Sides.First() == "potato");
+                Assert.IsTrue(meal.Drinks.Count() == 1 && meal.Drinks.First() == "wine");
+                Assert.IsTrue(meal.Desserts.Count() == 0);
                 Assert.AreEqual(ex.ToString(), "steak, potato, wine, error");
             }
         }
@@ -166,10 +173,10 @@ namespace Gcm.Practicum.Tests
             {
                 Assert.IsNotNull(ex.Meal);
                 var meal = ex.Meal;
-                Assert.IsTrue(meal.Entrees.Length == 1 && meal.Entrees[0] == "steak");
-                Assert.IsTrue(meal.Sides.Length == 0);
-                Assert.IsTrue(meal.Drinks.Length == 0);
-                Assert.IsTrue(meal.Desserts.Length == 0);
+                Assert.IsTrue(meal.Entrees.Count() == 1 && meal.Entrees.First() == "steak");
+                Assert.IsTrue(meal.Sides.Count() == 0);
+                Assert.IsTrue(meal.Drinks.Count() == 0);
+                Assert.IsTrue(meal.Desserts.Count() == 0);
                 Assert.AreEqual(ex.ToString(), "steak, error");
             }
         }

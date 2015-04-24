@@ -15,12 +15,12 @@ namespace Gcm.Practicum.Services
         /// <returns></returns>
         public TService Resolve<TService>()
         {
-            if (typeof (TService) == typeof (IMealService))
+            if (typeof(TService) == typeof(IMealService))
             {
-                return (TService) (object) new MealService();
+                return (TService)(object)new MealService();
             }
 
-            throw new NotSupportedException("TService is not supported.");
+            throw new NotSupportedException(string.Format("{0} service is not supported.", typeof(TService).FullName));
         }
     }
 }

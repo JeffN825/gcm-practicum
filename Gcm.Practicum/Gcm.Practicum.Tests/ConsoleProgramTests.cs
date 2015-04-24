@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 using Gcm.Practicum.Console;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,89 +12,73 @@ namespace Gcm.Practicum.Tests
     public class ConsoleProgramTests
     {
         [TestMethod]
-        [ExpectedException(typeof (ArgumentOutOfRangeException))]
-        public void Main_ThrowsException_WhenNoParametersSupplied()
+        public void Run_ThrowsException_WhenNoParametersSupplied()
         {
-            Program.Main(new string[0]);
+            try
+            {
+                Program.Run(new string[0]);
+                Assert.Fail();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Assert.AreEqual("args", ex.ParamName);
+            }
         }
 
         [TestMethod]
-        public void Main_ReturnsEggsToastCoffee_WhenMorningEggsToastCoffeeSupplied()
+        public void Run_ReturnsEggsToastCoffee_WhenMorningEggsToastCoffeeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"morning,", "1,", "2,", "3,"});
-            Assert.AreEqual(capturer.Output, "eggs, toast, coffee");
+            string output = Program.Run(new[] {"morning,", "1,", "2,", "3,"});
+            Assert.AreEqual("eggs, toast, coffee", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsEggsToastCoffee_WhenMorningToastEggsCoffeeSupplied()
+        public void Run_ReturnsEggsToastCoffee_WhenMorningToastEggsCoffeeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"morning,", "2,", "1,", "3,"});
-            Assert.AreEqual(capturer.Output, "eggs, toast, coffee");
+            string output = Program.Run(new[] {"morning,", "2,", "1,", "3,"});
+            Assert.AreEqual("eggs, toast, coffee", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsEggsToastCoffeeError_WhenMorningEggsToastCoffeeInvalidDishTypeSupplied()
+        public void Run_ReturnsEggsToastCoffeeError_WhenMorningEggsToastCoffeeInvalidDishTypeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"morning,", "1,", "2,", "3,", "4,"});
-            Assert.AreEqual(capturer.Output, "eggs, toast, coffee, error");
+            string output = Program.Run(new[] {"morning,", "1,", "2,", "3,", "4,"});
+            Assert.AreEqual("eggs, toast, coffee, error", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsEggsToastCoffeex3_WhenMorningEggsToastTwoCoffeesSupplied()
+        public void Run_ReturnsEggsToastCoffeex3_WhenMorningEggsToastTwoCoffeesSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"morning,", "1,", "2,", "3,", "3,", "3,"});
-            Assert.AreEqual(capturer.Output, "eggs, toast, coffee(x3)");
+            string output = Program.Run(new[] {"morning,", "1,", "2,", "3,", "3,", "3,"});
+            Assert.AreEqual("eggs, toast, coffee(x3)", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsSteakPotatoWineCake_WhenNightSteakPotatoWineCakeSupplied()
+        public void Run_ReturnsSteakPotatoWineCake_WhenNightSteakPotatoWineCakeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"night,", "1,", "2,", "3,", "4,"});
-            Assert.AreEqual(capturer.Output, "steak, potato, wine, cake");
+            string output = Program.Run(new[] {"night,", "1,", "2,", "3,", "4,"});
+            Assert.AreEqual("steak, potato, wine, cake", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsSteakPotatox2Cake_WhenNightSteakTwoPotatosCakeSupplied()
+        public void Run_ReturnsSteakPotatox2Cake_WhenNightSteakTwoPotatosCakeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"night,", "1,", "2,", "2,", "4,"});
-            Assert.AreEqual(capturer.Output, "steak, potato(x2), cake");
+            string output = Program.Run(new[] {"night,", "1,", "2,", "2,", "4,"});
+            Assert.AreEqual("steak, potato(x2), cake", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsSteakPotatoWineError_WhenNightSeakPotatoWineInvalidDishTypeSupplied()
+        public void Run_ReturnsSteakPotatoWineError_WhenNightSeakPotatoWineInvalidDishTypeSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"night,", "1,", "2,", "3,", "5,"});
-            Assert.AreEqual(capturer.Output, "steak, potato, wine, error");
+            string output = Program.Run(new[] {"night,", "1,", "2,", "3,", "5,"});
+            Assert.AreEqual("steak, potato, wine, error", output);
         }
 
         [TestMethod]
-        public void Main_ReturnsSteakError_WhenNightMultipleEntreesSupplied()
+        public void Run_ReturnsSteakError_WhenNightMultipleEntreesSupplied()
         {
-            var capturer = new ConsoleCapturingTraceListener();
-            Trace.Listeners.Add(capturer);
-            Program.Main(new[] {"night,", "1,", "1,", "2,", "3,", "5,"});
-            Assert.AreEqual(capturer.Output, "steak, error");
-        }
-
-        [TestCleanup]
-        public void RemoveConsoleCapturingTraceListener()
-        {
-            // if the test throws an exception, we want to clean this up anyway
-            Trace.Listeners.OfType<ConsoleCapturingTraceListener>().ToList().ForEach(l => Trace.Listeners.Remove(l));
+            string output = Program.Run(new[] {"night,", "1,", "1,", "2,", "3,", "5,"});
+            Assert.AreEqual("steak, error", output);
         }
     }
 }

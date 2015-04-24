@@ -50,7 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ConsoleCapturingTraceListener.cs" />
     <Compile Include="ConsoleProgramTests.cs" />
     <Compile Include="MealServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

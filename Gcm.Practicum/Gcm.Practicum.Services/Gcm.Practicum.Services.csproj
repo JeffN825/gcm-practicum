@@ -44,6 +44,9 @@
     </Compile>
     <Compile Include="IMealService.cs" />
     <Compile Include="Meal.cs" />
+    <Compile Include="MealConfiguration.cs" />
+    <Compile Include="Dish.cs" />
+    <Compile Include="DishType.cs" />
     <Compile Include="MealService.cs" />
     <Compile Include="OrderException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
