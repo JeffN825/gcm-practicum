@@ -14,7 +14,7 @@ namespace Gcm.Practicum.Console
         /// <exception cref="System.ArgumentOutOfRangeException">args;There should be exactly 2 arguments.</exception>
         internal static void Main(params string[] args)
         {
-            Run(args);
+            System.Console.WriteLine(Run(args));
         }
 
         /// <summary>
