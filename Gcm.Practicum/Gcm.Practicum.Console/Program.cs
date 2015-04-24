@@ -48,7 +48,7 @@ namespace Gcm.Practicum.Console
             }
             catch (OrderException ex)
             {
-                return ex.ToString();
+                return ex.Output;
             }
             catch (Exception ex)
             {

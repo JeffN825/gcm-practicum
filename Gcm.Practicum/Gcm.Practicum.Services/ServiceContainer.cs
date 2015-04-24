@@ -17,7 +17,7 @@ namespace Gcm.Practicum.Services
         {
             if (typeof(TService) == typeof(IMealService))
             {
-                return (TService)(object)new MealService();
+                return (TService)(object)new MealService(new MealConfigurationRepository());
             }
 
             throw new NotSupportedException(string.Format("{0} service is not supported.", typeof(TService).FullName));

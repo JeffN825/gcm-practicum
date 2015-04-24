@@ -42,15 +42,19 @@
     <Compile Include="..\Shared\InternalsVisibleTo.cs">
       <Link>InternalsVisibleTo.cs</Link>
     </Compile>
+    <Compile Include="MealConfigurationRepository.cs" />
+    <Compile Include="IMealConfigurationRepository.cs" />
     <Compile Include="IMealService.cs" />
     <Compile Include="Meal.cs" />
-    <Compile Include="MealConfiguration.cs" />
     <Compile Include="Dish.cs" />
     <Compile Include="DishType.cs" />
+    <Compile Include="MealConfiguration.cs" />
     <Compile Include="MealService.cs" />
+    <Compile Include="MealServiceExtensions.cs" />
     <Compile Include="OrderException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContainer.cs" />
+    <Compile Include="TimeOfDay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
